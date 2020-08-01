@@ -104,7 +104,7 @@ module.exports = class ClownTranslate extends Plugin {
         const getGuild = (await getModule(["getGuild"])).getGuild;
         const getMessages = (await getModule(["getMessages"])).getMessages;
 
-        if (getGuilds("584321061437571072")) {
+        if (getGuild("584321061437571072")) {
             console.info("guild");
             await fetchMessages("694792497481646230");
             const link = getMessages("694792497481646230")._array.find(m => m.id == "694792630411984957").content;
